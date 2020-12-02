@@ -85,9 +85,11 @@ public class GateServiceTest {
      * WRITE A TEST TO check gate doesn't open with wrong number of zones
      */
     @Test
-    public void testgateShutWrongZones() {
-
-        //TODO WRITE TEST
+    public void testGateShutWrongZones() {
+        Date currentTime = new Date(validFrom.getTime() + 1000 * 60);
+        String zonesTravelled = "4";
+        boolean open = gateEntryService.openGate(ticket, zonesTravelled, currentTime);
+        assertFalse(open);
     }
 
     /**
@@ -97,7 +99,10 @@ public class GateServiceTest {
     @Test
     public void testCurrentTimeBeforeValidFrom() {
 
-        //TODO WRITE TEST
+        Date currentTime = new Date(validFrom.getTime() - 1000 * 60);
+        String zonesTravelled = "1";
+        boolean open = gateEntryService.openGate(ticket, zonesTravelled, currentTime);
+        assertFalse(open);
 
     }
 
@@ -108,7 +113,10 @@ public class GateServiceTest {
     @Test
     public void testCurrentTimeAfterValidTo() {
 
-         //TODO WRITE TEST
+        Date currentTime = new Date(validFrom.getTime() + 100000000 * 60);
+        String zonesTravelled = "1";
+        boolean open = gateEntryService.openGate(ticket, zonesTravelled, currentTime);
+        assertFalse(open);
 
     }
     
