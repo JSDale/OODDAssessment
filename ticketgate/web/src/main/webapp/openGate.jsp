@@ -44,12 +44,19 @@
     }
     
     boolean gateOpen = false;
+    if(ticketStr != ""){
+    Ticket ticket = Ticket.fromXML(ticketStr);
+    Date currentTimeDate = df.parse(currentTimeStr);
+    
+    gateOpen = gateEntryService.openGate(ticket, zonesTravelledStr, currentTimeDate);
+    }
 
     /* *************************************************************************
     //TODO WRITE CODE TO OPEN GATE USING gateEntryService AND DATE FROM THE PAGE
     // hint - look at how the generateTicket.jsp creates tickets and think how 
     // you would reverse the process
     **************************************************************************** */
+    
 
 %>
 <!DOCTYPE html>

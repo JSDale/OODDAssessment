@@ -53,7 +53,7 @@ public class TicketJaxbTest {
          }
          actualTicket.setEncodedKey("HPYxLpS23SSkSj1ux0DNhTgCO883/0scVFxQ3V/SYPSrQfCQC71JJoGK0Q8WgIRyKvmqzTaJ6rxxQGtPru6SKJhALAxed7SbcFF5hk4qCZq3KK4DESGlLd2pJfeXeAlUJzH2v7yI9pBNGv+FQ2IhQpn9oXr71tiKa8MtpQ5k1ds=");
          
-         String actualTicketXml = actualTicket.toXML().toString();
+         String actualTicketXml = actualTicket.toXML();
          
          String expectedTicket =  "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
                                                 "<ticket>\n" +
