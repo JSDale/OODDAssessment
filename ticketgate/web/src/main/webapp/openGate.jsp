@@ -4,6 +4,8 @@
     Author     : cgallen
 --%>
 
+<%@page import="java.security.PublicKey"%>
+<%@page import="solent.ac.uk.com504.examples.ticketgate.crypto.AsymmetricCryptography"%>
 <%@page import="java.io.StringReader"%>
 <%@page import="javax.xml.bind.Unmarshaller"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -44,11 +46,45 @@
     }
     
     boolean gateOpen = false;
-    if(ticketStr != ""){
-    Ticket ticket = Ticket.fromXML(ticketStr);
-    Date currentTimeDate = df.parse(currentTimeStr);
     
-    gateOpen = gateEntryService.openGate(ticket, zonesTravelledStr, currentTimeDate);
+    if(ticketStr != ""){
+        Ticket ticket = Ticket.fromXML(ticketStr);
+        
+        String ecndoedStr = ticket.getEncodedKey();
+        AsymmetricCryptography ac = new AsymmetricCryptography();
+        PublicKey publicKey = ac.getPublicFromClassPath("publicKey");
+        String decodedKey = ac.decryptText(ecndoedStr, publicKey);
+        
+        Date validFrom = new Date();
+        Date validTo = new Date();
+        
+        String[] tempArr= decodedKey.split(",");
+        DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss ZZZ yyyy");
+        for(int i = 0; i < tempArr.length; i++)
+        {
+            if(tempArr[i].contains("validTo"))
+            {
+                String tempStr = tempArr[i].replace(" validTo=", "");
+                tempStr = tempStr.replace("}", "");
+                validTo = dateFormat.parse(tempStr);
+            }
+        }
+        for(int i = 0; i < tempArr.length; i++)
+        {
+            if(tempArr[i].contains("validFrom"))
+            {
+                String tempStr = tempArr[i].replace(" validFrom=", "");
+                tempStr = tempStr.replace("}", "");
+                validFrom = dateFormat.parse(tempStr);
+            }
+        }
+        
+        
+        Date currentTimeDate = df.parse(currentTimeStr);
+        
+        if(validFrom.before(currentTimeDate) && validTo.after(currentTimeDate)){
+            gateOpen = gateEntryService.openGate(ticket, zonesTravelledStr, currentTimeDate);
+            }
     }
 
     /* *************************************************************************

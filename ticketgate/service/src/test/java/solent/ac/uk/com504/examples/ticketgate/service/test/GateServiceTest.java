@@ -156,4 +156,18 @@ public class GateServiceTest {
                 
                 Assert.assertEquals(expectedTicketStr, decodedKey);
     }
+    
+    @Test
+    public void testDateFormats()
+    {
+        DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss ZZZ yyyy");
+        //DateFormat df = new SimpleDateFormat(DateTimeAdapter.DATE_FORMAT);
+        try{
+            Date testDate = df.parse("Fri Dec 04 09:17:08 GMT 2020");
+        }
+        catch(Exception ex)
+        {
+            Assert.fail("Date couldn't be formated");
+        }
+    }
 }

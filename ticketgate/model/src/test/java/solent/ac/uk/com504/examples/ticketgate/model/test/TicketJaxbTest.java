@@ -111,7 +111,7 @@ public class TicketJaxbTest {
             //String expected = actualTicketXml;
             Assert.assertTrue("actual isnt same as expected", pass);
             
-            //Both Assert.assertEquals(expected, actual) and expected.equals(actual) failed eventhough the string look identical.
+            //Both Assert.assertEquals(expected, actual) and expected.equals(actual) failed eventhough the string looked identical.
     }
     
     @Test 
