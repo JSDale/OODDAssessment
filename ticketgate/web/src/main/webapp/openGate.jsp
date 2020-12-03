@@ -86,6 +86,8 @@
         Date validTo = ticketHandler.GetValidTimeTo(decodedTicket);
         //checks if station and zones match
         boolean match = ticketHandler.TicketsMatch(ticketFromXml, decodedTicket);
+        //checks if zones in encoded ticket are qual to or less than zones travelled feild
+        boolean zonesOk = ticketHandler.ZonesTravelledOk(zonesTravelledStr, decodedTicket);
                 
         
         Date currentTimeDate = df.parse(currentTimeStr);
@@ -99,7 +101,7 @@
         validToTime = validToTime + 100;
         validTo.setTime(validToTime);
         
-        if(validFrom.before(currentTimeDate) && validTo.after(currentTimeDate) && match){
+        if(validFrom.before(currentTimeDate) && validTo.after(currentTimeDate) && match && zonesOk){
             gateOpen = gateEntryService.openGate(ticketFromXml, zonesTravelledStr, currentTimeDate);
             }
     }

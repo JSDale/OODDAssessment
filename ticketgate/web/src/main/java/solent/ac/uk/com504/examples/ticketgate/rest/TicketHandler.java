@@ -13,7 +13,7 @@ import solent.ac.uk.com504.examples.ticketgate.model.util.DateTimeAdapter;
 
 /**
  *
- * @author Jacob
+ * @author Jacob Dale
  */
 public class TicketHandler {
     
