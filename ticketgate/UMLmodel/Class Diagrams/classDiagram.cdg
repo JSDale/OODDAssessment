@@ -104,22 +104,43 @@
         </Method>
       </Methods>
     </Interface>
+    <Class name="TicketHandler" package="" visibility="public" xPosition="1375.0" yPosition="133.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="GetValidTimeFrom" returnType="Date" visibility="public">
+          <Argument type="String" name="decodedTicket"/>
+        </Method>
+        <Method name="GetValidTimeTo" returnType="Date" visibility="public">
+          <Argument type="String" name="decodedTicket"/>
+        </Method>
+        <Method name="TicketsMatch" returnType="boolean" visibility="public">
+          <Argument type="Ticket" name="ticketFromXml"/>
+          <Argument type="String" name="decodedTicket"/>
+        </Method>
+        <Method name="ZonesTravelledOk" returnType="boolean" visibility="public">
+          <Argument type="String" name="zonesTravelled"/>
+          <Argument type="String" name="decodedTicket"/>
+        </Method>
+      </Methods>
+    </Class>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <UseRelation name="useskeys" source="solent.ac.uk.com504.examples.ticketgate.crypto.AsymmetricCryptography" target="publicKey" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation name="generateKeysDuringBuild" source="BuildSystem_pom_xml" target="solent.ac.uk.com504.examples.ticketgate.crypto.GenerateKeys" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation name="generatesKeys" source="solent.ac.uk.com504.examples.ticketgate.crypto.GenerateKeys" target="publicKey" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="usesServiceFactory" source="solent.ac.uk.com504.examples.ticketgate.model.rest.RestService" target="solent.ac.uk.com504.examples.doorlock.model.service.ServiceFactory" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation name="usesKeys" source="solent.ac.uk.com504.examples.ticketgate.crypto.AsymmetricCryptography" target="privateKey" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation name="createsTicket" source="solent.ac.uk.com504.examples.ticketgate.model.service.GateManagementService" target="solent.ac.uk.com504.examples.ticketgate.model.dto.Ticket" sourceCardinality="1..1" targetCardinality="0..*"/>
     <UseRelation name="usesServiceFactory" source="solent.ac.uk.com504.examples.doorlock.service.web.openGateJSP_doNotGenerate" target="solent.ac.uk.com504.examples.doorlock.model.service.ServiceFactory" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation name="createsLockManagementService" source="solent.ac.uk.com504.examples.doorlock.model.service.ServiceFactory" target="solent.ac.uk.com504.examples.ticketgate.model.service.GateManagementService" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation name="usesCryptography" source="solent.ac.uk.com504.examples.ticketgate.model.service.GateManagementService" target="solent.ac.uk.com504.examples.ticketgate.crypto.AsymmetricCryptography" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation name="readsTicket" source="solent.ac.uk.com504.examples.ticketgate.model.service.GateEntryService" target="solent.ac.uk.com504.examples.ticketgate.model.dto.Ticket" sourceCardinality="0..*" targetCardinality="0..*"/>
-    <UseRelation name="generatesKeys" source="solent.ac.uk.com504.examples.ticketgate.crypto.GenerateKeys" target="privateKey" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation name="usesCryptptography" source="solent.ac.uk.com504.examples.ticketgate.model.service.GateEntryService" target="solent.ac.uk.com504.examples.ticketgate.crypto.AsymmetricCryptography" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="useskeys" source="solent.ac.uk.com504.examples.ticketgate.crypto.AsymmetricCryptography" target="publicKey" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation name="createsDoorLockService" source="solent.ac.uk.com504.examples.doorlock.model.service.ServiceFactory" target="solent.ac.uk.com504.examples.ticketgate.model.service.GateEntryService" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation name="usesServiceFactory" source="solent.ac.uk.com504.examples.ticketgate.model.rest.RestService" target="solent.ac.uk.com504.examples.doorlock.model.service.ServiceFactory" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation name="usesReplyMessage" source="solent.ac.uk.com504.examples.ticketgate.model.rest.RestService" target="solent.ac.uk.com504.examples.ticketgate.model.dto.ReplyMessage" sourceCardinality="1..1" targetCardinality="0..*"/>
+    <UseRelation name="generatesKeys" source="solent.ac.uk.com504.examples.ticketgate.crypto.GenerateKeys" target="privateKey" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="readsTicket" source="solent.ac.uk.com504.examples.ticketgate.model.service.GateEntryService" target="solent.ac.uk.com504.examples.ticketgate.model.dto.Ticket" sourceCardinality="0..*" targetCardinality="0..*"/>
+    <UseRelation name="generateKeysDuringBuild" source="BuildSystem_pom_xml" target="solent.ac.uk.com504.examples.ticketgate.crypto.GenerateKeys" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="usesCryptptography" source="solent.ac.uk.com504.examples.ticketgate.model.service.GateEntryService" target="solent.ac.uk.com504.examples.ticketgate.crypto.AsymmetricCryptography" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="generatesKeys" source="solent.ac.uk.com504.examples.ticketgate.crypto.GenerateKeys" target="publicKey" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="usesCryptography" source="solent.ac.uk.com504.examples.ticketgate.model.service.GateManagementService" target="solent.ac.uk.com504.examples.ticketgate.crypto.AsymmetricCryptography" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation name="usesServiceFactory" source="solent.ac.uk.com504.examples.doorlock.service.web.generateTicketJSP_doNotGenerate" target="solent.ac.uk.com504.examples.doorlock.model.service.ServiceFactory" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="useTicketHandler" source="solent.ac.uk.com504.examples.doorlock.service.web.openGateJSP_doNotGenerate" target="TicketHandler" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="createsTicket" source="solent.ac.uk.com504.examples.ticketgate.model.service.GateManagementService" target="solent.ac.uk.com504.examples.ticketgate.model.dto.Ticket" sourceCardinality="1..1" targetCardinality="0..*"/>
+    <UseRelation name="usesReplyMessage" source="solent.ac.uk.com504.examples.ticketgate.model.rest.RestService" target="solent.ac.uk.com504.examples.ticketgate.model.dto.ReplyMessage" sourceCardinality="1..1" targetCardinality="0..*"/>
   </ClassDiagramRelations>
 </ClassDiagram>
