@@ -4,6 +4,7 @@
     Author     : cgallen
 --%>
 
+<%@page import="solent.ac.uk.com504.examples.ticketgate.rest.TicketHandler"%>
 <%@page import="java.security.PublicKey"%>
 <%@page import="solent.ac.uk.com504.examples.ticketgate.crypto.AsymmetricCryptography"%>
 <%@page import="java.io.StringReader"%>
@@ -48,13 +49,13 @@
     boolean gateOpen = false;
     
     if(ticketStr != ""){
-        Ticket ticket = Ticket.fromXML(ticketStr);
+        Ticket ticketFromXml = Ticket.fromXML(ticketStr);
         
-        String ecndoedStr = ticket.getEncodedKey();
+        String ecndoedStr = ticketFromXml.getEncodedKey();
         AsymmetricCryptography ac = new AsymmetricCryptography();
         PublicKey publicKey = ac.getPublicFromClassPath("publicKey");
-        String decodedKey = ac.decryptText(ecndoedStr, publicKey);
-        
+        String decodedTicket = ac.decryptText(ecndoedStr, publicKey);
+        /*
         Date validFrom = new Date();
         Date validTo = new Date();
         
@@ -78,12 +79,28 @@
                 validFrom = dateFormat.parse(tempStr);
             }
         }
-        
+        */
+    
+        TicketHandler ticketHandler = new TicketHandler();
+        Date validFrom = ticketHandler.GetValidTimeFrom(decodedTicket);
+        Date validTo = ticketHandler.GetValidTimeTo(decodedTicket);
+        //checks if station and zones match
+        boolean match = ticketHandler.TicketsMatch(ticketFromXml, decodedTicket);
+                
         
         Date currentTimeDate = df.parse(currentTimeStr);
+        //subtracts one second from validFrom Date
+        long validFromTime = validFrom.getTime();
+        validFromTime = validFromTime - 100;
+        validFrom.setTime(validFromTime);
         
-        if(validFrom.before(currentTimeDate) && validTo.after(currentTimeDate)){
-            gateOpen = gateEntryService.openGate(ticket, zonesTravelledStr, currentTimeDate);
+        //adds one second from validFrom Date
+        long validToTime = validTo.getTime();
+        validToTime = validToTime + 100;
+        validTo.setTime(validToTime);
+        
+        if(validFrom.before(currentTimeDate) && validTo.after(currentTimeDate) && match){
+            gateOpen = gateEntryService.openGate(ticketFromXml, zonesTravelledStr, currentTimeDate);
             }
     }
 

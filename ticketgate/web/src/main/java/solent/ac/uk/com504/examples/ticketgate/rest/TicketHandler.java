@@ -1,0 +1,113 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package solent.ac.uk.com504.examples.ticketgate.rest;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import solent.ac.uk.com504.examples.ticketgate.model.dto.Ticket;
+import solent.ac.uk.com504.examples.ticketgate.model.util.DateTimeAdapter;
+
+/**
+ *
+ * @author Jacob
+ */
+public class TicketHandler {
+    
+    public Date GetValidTimeFrom(String decodedTicket)
+    {
+        Ticket tempTicket = GetTicketFromString(decodedTicket);
+        return tempTicket.getValidFrom();
+    }
+    
+    public Date GetValidTimeTo(String decodedTicket)
+    {
+        Ticket tempTicket = GetTicketFromString(decodedTicket);
+        return tempTicket.getValidTo();
+    }
+    
+    public boolean TicketsMatch(Ticket ticketFromXml, String decodedTicket)
+    {
+        Ticket tempTicket = GetTicketFromString(decodedTicket);
+        boolean match = false;
+        if(ticketFromXml.getStartStation().equals(tempTicket.getStartStation()))
+        {
+            match = true;
+        }
+        if(ticketFromXml.getStartStation().equals(tempTicket.getStartStation()))
+        {
+            match = true;
+        }
+        
+        return match;
+    }
+    
+    public boolean ZonesTravelledOk(String zonesTravelled, String decodedTicket)
+    {
+        boolean zonesTravelledOk = false;
+        Ticket tempTicket = GetTicketFromString(decodedTicket);
+        int tempTicketZones = Integer.parseInt(tempTicket.getZones());
+        int ticketFromFeild = Integer.parseInt(zonesTravelled);
+        
+        if(tempTicketZones <= ticketFromFeild)
+        {
+            zonesTravelledOk = true;
+        }
+            
+        return zonesTravelledOk;
+    }
+    
+    private Ticket GetTicketFromString(String decodedTicket)
+    {
+        String[] tempArr= decodedTicket.split(","); 
+        DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss ZZZ yyyy");
+        DateFormat df = new SimpleDateFormat(DateTimeAdapter.DATE_FORMAT);
+        Date validFrom = new Date();
+        Date validTo = new Date();
+        Ticket tempTicket = new Ticket();
+        
+        for(int i = 0; i < tempArr.length; i++)
+        {
+            if(tempArr[i].contains("validTo"))
+            {
+                String tempStr = tempArr[i].replace(" validTo=", "");
+                tempStr = tempStr.replace("}", "");
+                try{
+                     validTo = dateFormat.parse(tempStr);
+                     tempTicket.setValidTo(validTo);
+                }
+               catch(Exception ex)
+               {
+                    throw new RuntimeException(ex.getMessage());
+               }
+            }
+                
+                if(tempArr[i].contains("validFrom"))
+                {
+                    String tempStr = tempArr[i].replace(" validFrom=", "");
+                    try{
+                         validFrom = dateFormat.parse(tempStr);
+                         tempTicket.setValidFrom(validFrom);
+                    }
+                   catch(Exception ex)
+                   {
+                        throw new RuntimeException(ex.getMessage());
+                   }
+                }
+                if(tempArr[i].contains("startStation"))
+                {
+                    String startStation = tempArr[i].replace(" startStation=", "");
+                    tempTicket.setStartStation(startStation);
+                }
+                if(tempArr[i].contains("zones"))
+                {
+                    String zones = tempArr[i].replace(" Ticket{zones=", "");
+                    tempTicket.setStartStation(zones);
+                }
+            }
+         return tempTicket;
+    }
+}
