@@ -41,6 +41,14 @@ public class TicketHandler {
         {
             match = true;
         }
+        if(ticketFromXml.getValidFrom() == tempTicket.getValidFrom())
+        {
+             match = true;
+        }
+        if(ticketFromXml.getValidTo() == tempTicket.getValidTo())
+        {
+             match = true;
+        }        
         
         return match;
     }
