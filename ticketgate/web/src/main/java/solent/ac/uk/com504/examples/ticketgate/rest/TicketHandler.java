@@ -49,10 +49,11 @@ public class TicketHandler {
     {
         boolean zonesTravelledOk = false;
         Ticket tempTicket = GetTicketFromString(decodedTicket);
-        int tempTicketZones = Integer.parseInt(tempTicket.getZones());
+        String  tempTicketZonesStr = tempTicket.getZones();
+        int tempTicketZones = Integer.parseInt(tempTicketZonesStr);
         int ticketFromFeild = Integer.parseInt(zonesTravelled);
         
-        if(tempTicketZones <= ticketFromFeild)
+        if(tempTicketZones >= ticketFromFeild)
         {
             zonesTravelledOk = true;
         }
@@ -104,8 +105,8 @@ public class TicketHandler {
                 }
                 if(tempArr[i].contains("zones"))
                 {
-                    String zones = tempArr[i].replace(" Ticket{zones=", "");
-                    tempTicket.setStartStation(zones);
+                    String zones = tempArr[i].replace("Ticket{zones=", "");
+                    tempTicket.setZones(zones);
                 }
             }
          return tempTicket;

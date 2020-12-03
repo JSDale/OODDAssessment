@@ -55,31 +55,6 @@
         AsymmetricCryptography ac = new AsymmetricCryptography();
         PublicKey publicKey = ac.getPublicFromClassPath("publicKey");
         String decodedTicket = ac.decryptText(ecndoedStr, publicKey);
-        /*
-        Date validFrom = new Date();
-        Date validTo = new Date();
-        
-        String[] tempArr= decodedKey.split(",");
-        DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss ZZZ yyyy");
-        for(int i = 0; i < tempArr.length; i++)
-        {
-            if(tempArr[i].contains("validTo"))
-            {
-                String tempStr = tempArr[i].replace(" validTo=", "");
-                tempStr = tempStr.replace("}", "");
-                validTo = dateFormat.parse(tempStr);
-            }
-        }
-        for(int i = 0; i < tempArr.length; i++)
-        {
-            if(tempArr[i].contains("validFrom"))
-            {
-                String tempStr = tempArr[i].replace(" validFrom=", "");
-                tempStr = tempStr.replace("}", "");
-                validFrom = dateFormat.parse(tempStr);
-            }
-        }
-        */
     
         TicketHandler ticketHandler = new TicketHandler();
         Date validFrom = ticketHandler.GetValidTimeFrom(decodedTicket);
